@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  url      = env("DATABASE_URL")
 }
 
 model TreeStock {
@@ -38,7 +38,7 @@ model SaleItem {
   id       Int     @id @default(autoincrement())
   saleId   Int
   sale     Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
-  tree     String?
+  tree     String
   size     String?
   metalStand        Int @default(0)
   plasticStand      Int @default(0)
