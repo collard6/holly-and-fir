@@ -254,7 +254,7 @@ const App = () => {
                       >
                         -
                       </button>
-                      <span className="flex-1 text-center text-lg font-semibold">{metalStand}</span>
+                      <span className="flex-1 text-center text-lg font-semibold text-gray-800">{metalStand}</span>
                       <button
                         type="button"
                         onClick={() => setMetalStand(metalStand + 1)}
@@ -274,7 +274,7 @@ const App = () => {
                       >
                         -
                       </button>
-                      <span className="flex-1 text-center text-lg font-semibold">{plasticStand}</span>
+                      <span className="flex-1 text-center text-lg font-semibold text-gray-800">{plasticStand}</span>
                       <button
                         type="button"
                         onClick={() => setPlasticStand(plasticStand + 1)}
@@ -301,7 +301,7 @@ const App = () => {
                       >
                         -
                       </button>
-                      <span className="flex-1 text-center text-lg font-semibold">{artificialWreath}</span>
+                      <span className="flex-1 text-center text-lg font-semibold text-gray-800">{artificialWreath}</span>
                       <button
                         type="button"
                         onClick={() => setArtificialWreath(artificialWreath + 1)}
@@ -321,7 +321,7 @@ const App = () => {
                       >
                         -
                       </button>
-                      <span className="flex-1 text-center text-lg font-semibold">{handmadeWreath}</span>
+                      <span className="flex-1 text-center text-lg font-semibold text-gray-800">{handmadeWreath}</span>
                       <button
                         type="button"
                         onClick={() => setHandmadeWreath(handmadeWreath + 1)}
@@ -341,7 +341,7 @@ const App = () => {
                       >
                         -
                       </button>
-                      <span className="flex-1 text-center text-lg font-semibold">{hollyWreath}</span>
+                      <span className="flex-1 text-center text-lg font-semibold text-gray-800">{hollyWreath}</span>
                       <button
                         type="button"
                         onClick={() => setHollyWreath(hollyWreath + 1)}
@@ -368,7 +368,7 @@ const App = () => {
                       >
                         -
                       </button>
-                      <span className="flex-1 text-center text-lg font-semibold">{smallReindeer}</span>
+                      <span className="flex-1 text-center text-lg font-semibold text-gray-800">{smallReindeer}</span>
                       <button
                         type="button"
                         onClick={() => setSmallReindeer(smallReindeer + 1)}
@@ -388,7 +388,7 @@ const App = () => {
                       >
                         -
                       </button>
-                      <span className="flex-1 text-center text-lg font-semibold">{mediumReindeer}</span>
+                      <span className="flex-1 text-center text-lg font-semibold text-gray-800">{mediumReindeer}</span>
                       <button
                         type="button"
                         onClick={() => setMediumReindeer(mediumReindeer + 1)}
@@ -408,7 +408,7 @@ const App = () => {
                       >
                         -
                       </button>
-                      <span className="flex-1 text-center text-lg font-semibold">{largeReindeer}</span>
+                      <span className="flex-1 text-center text-lg font-semibold text-gray-800">{largeReindeer}</span>
                       <button
                         type="button"
                         onClick={() => setLargeReindeer(largeReindeer + 1)}
