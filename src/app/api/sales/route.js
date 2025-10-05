@@ -5,6 +5,7 @@ export async function POST(request) {
   try {
     const { items, total, discount, paymentMethod, email, soldBy } = await request.json();
 
+    // Create the sale with items
     const sale = await prisma.sale.create({
       data: {
         total: parseFloat(total),
@@ -32,6 +33,73 @@ export async function POST(request) {
         items: true
       }
     });
+
+    // Reduce stock for each item sold
+    for (const item of items) {
+      // Reduce tree stock if a tree was purchased
+      if (item.tree && item.tree !== 'No Tree' && item.size) {
+        const treeType = item.tree.toLowerCase();
+        await prisma.treeStock.update({
+          where: {
+            type_size: {
+              type: treeType,
+              size: item.size
+            }
+          },
+          data: {
+            quantity: {
+              decrement: 1
+            }
+          }
+        });
+
+        // Add to stock history
+        await prisma.stockHistory.create({
+          data: {
+            type: 'sale',
+            item: `${item.tree} ${item.size}`,
+            quantity: -1,
+            notes: `Sale #${sale.id}`
+          }
+        });
+      }
+
+      // Reduce accessory stock
+      const accessoryMapping = {
+        metalStand: 'Metal Stand',
+        plasticStand: 'Plastic Stand',
+        artificialWreath: 'Artificial Wreath',
+        handmadeWreath: 'Handmade Wreath',
+        hollyWreath: 'Holly Wreath',
+        smallReindeer: 'Small Reindeer',
+        mediumReindeer: 'Medium Reindeer',
+        largeReindeer: 'Large Reindeer'
+      };
+
+      for (const [key, name] of Object.entries(accessoryMapping)) {
+        const qty = item.accessories?.[key] || 0;
+        if (qty > 0) {
+          await prisma.accessoryStock.update({
+            where: { name },
+            data: {
+              quantity: {
+                decrement: qty
+              }
+            }
+          });
+
+          // Add to stock history
+          await prisma.stockHistory.create({
+            data: {
+              type: 'sale',
+              item: name,
+              quantity: -qty,
+              notes: `Sale #${sale.id}`
+            }
+          });
+        }
+      }
+    }
 
     return NextResponse.json(sale);
   } catch (error) {

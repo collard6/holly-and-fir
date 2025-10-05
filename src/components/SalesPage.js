@@ -466,7 +466,7 @@ const App = () => {
             {/* Subtotal */}
             {saleItems.length > 0 && (
               <div className="border-t pt-4 mb-4">
-                <div className="flex justify-between text-lg font-semibold mb-2">
+                <div className="flex justify-between text-lg font-semibold text-gray-800 mb-2">
                   <span>Subtotal:</span>
                   <span>£{saleItems.reduce((sum, item) => sum + item.price, 0).toFixed(2)}</span>
                 </div>
@@ -600,7 +600,7 @@ const App = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="customer@example.com"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 text-sm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 text-sm text-gray-800"
               />
             </div>
 
