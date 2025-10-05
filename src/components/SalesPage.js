@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { ShoppingCart, X } from 'lucide-react';
+import { ShoppingCart, X, ChevronDown, ChevronUp } from 'lucide-react';
 
 const App = () => {
   const [selectedTree, setSelectedTree] = useState('No Tree');
   const [selectedSize, setSelectedSize] = useState('');
+  const [showDiscountSection, setShowDiscountSection] = useState(false);
   
   // Accessories
   const [metalStand, setMetalStand] = useState(0);
@@ -126,6 +127,7 @@ const App = () => {
     setSelectedDiscount(0);
     setPaymentMethod('');
     setEmail('');
+    setShowDiscountSection(false);
   };
 
   const handleDiscountClick = (percent) => {
@@ -133,40 +135,40 @@ const App = () => {
   };
 
   const handleSubmit = async () => {
-  if (saleItems.length === 0) {
-    alert('Please add items to the sale');
-    return;
-  }
-  if (!paymentMethod) {
-    alert('Please select payment method');
-    return;
-  }
-  
-  try {
-    const response = await fetch('/api/sales', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        items: saleItems,
-        total: calculateTotal(),
-        discount: selectedDiscount,
-        paymentMethod,
-        email
-      })
-    });
-
-    if (response.ok) {
-      alert(`Sale completed! Total: £${calculateTotal().toFixed(2)}`);
-      resetForm();
-    } else {
-      alert('Error saving sale');
+    if (saleItems.length === 0) {
+      alert('Please add items to the sale');
+      return;
     }
-  } catch (error) {
-    alert('Error: ' + error.message);
-  }
-};
+    if (!paymentMethod) {
+      alert('Please select payment method');
+      return;
+    }
+    
+    try {
+      const response = await fetch('/api/sales', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: saleItems,
+          total: calculateTotal(),
+          discount: selectedDiscount,
+          paymentMethod,
+          email
+        })
+      });
+
+      if (response.ok) {
+        alert(`Sale completed! Total: £${calculateTotal().toFixed(2)}`);
+        resetForm();
+      } else {
+        alert('Error saving sale');
+      }
+    } catch (error) {
+      alert('Error: ' + error.message);
+    }
+  };
 
   const formatAccessories = (accessories) => {
     const items = [];
@@ -471,71 +473,84 @@ const App = () => {
               </div>
             )}
 
-            {/* Discount Buttons */}
+            {/* Collapsible Discount Section */}
             <div className="mb-4">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Discount</h3>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  onClick={() => handleDiscountClick(0)}
-                  className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
-                    selectedDiscount === 0
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  0%
-                </button>
-                <button
-                  onClick={() => handleDiscountClick(5)}
-                  className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
-                    selectedDiscount === 5
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  5%
-                </button>
-                <button
-                  onClick={() => handleDiscountClick(10)}
-                  className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
-                    selectedDiscount === 10
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  10%
-                </button>
-                <button
-                  onClick={() => handleDiscountClick(15)}
-                  className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
-                    selectedDiscount === 15
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  15%
-                </button>
-                <button
-                  onClick={() => handleDiscountClick(20)}
-                  className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
-                    selectedDiscount === 20
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  20%
-                </button>
-                <button
-                  onClick={() => handleDiscountClick(25)}
-                  className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
-                    selectedDiscount === 25
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  25%
-                </button>
-              </div>
+              <button
+                onClick={() => setShowDiscountSection(!showDiscountSection)}
+                className="w-full flex items-center justify-between px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+              >
+                <span className="text-sm font-semibold text-gray-700">
+                  {selectedDiscount > 0 ? `Discount: ${selectedDiscount}%` : 'Apply Discount'}
+                </span>
+                {showDiscountSection ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </button>
+              
+              {showDiscountSection && (
+                <div className="mt-2 p-3 bg-gray-50 rounded-lg">
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      onClick={() => handleDiscountClick(0)}
+                      className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
+                        selectedDiscount === 0
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                    >
+                      0%
+                    </button>
+                    <button
+                      onClick={() => handleDiscountClick(5)}
+                      className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
+                        selectedDiscount === 5
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                    >
+                      5%
+                    </button>
+                    <button
+                      onClick={() => handleDiscountClick(10)}
+                      className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
+                        selectedDiscount === 10
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                    >
+                      10%
+                    </button>
+                    <button
+                      onClick={() => handleDiscountClick(15)}
+                      className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
+                        selectedDiscount === 15
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                    >
+                      15%
+                    </button>
+                    <button
+                      onClick={() => handleDiscountClick(20)}
+                      className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
+                        selectedDiscount === 20
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                    >
+                      20%
+                    </button>
+                    <button
+                      onClick={() => handleDiscountClick(25)}
+                      className={`px-2 py-2 rounded-lg font-semibold text-xs transition ${
+                        selectedDiscount === 25
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                    >
+                      25%
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Total */}
@@ -545,11 +560,6 @@ const App = () => {
                   <span className="text-xl font-bold text-gray-800">Total:</span>
                   <span className="text-2xl font-bold text-green-600">£{calculateTotal().toFixed(2)}</span>
                 </div>
-                {selectedDiscount > 0 && (
-                  <p className="text-xs text-green-700 text-right mt-1">
-                    {selectedDiscount}% discount applied
-                  </p>
-                )}
               </div>
             )}
 
