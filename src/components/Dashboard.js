@@ -62,20 +62,20 @@ const Dashboard = () => {
 
   const [prices, setPrices] = useState({
     trees: {
-      nordmann: { '2ft': 25, '3ft': 35, '4ft': 45, '5ft': 55, '6ft': 65, '7ft': 75, '8ft': 85, '9ft+': 110 },
-      fraser: { '2ft': 20, '3ft': 30, '4ft': 40, '5ft': 50, '6ft': 60, '7ft': 70, '8ft': 80, '9ft+': 100 },
-      spruce: { '2ft': 18, '3ft': 28, '4ft': 38, '5ft': 48, '6ft': 58, '7ft': 68, '8ft': 78, '9ft+': 95 },
-      pot: { '2ft': 15, '3ft': 25, '4ft': 35, '5ft': 45, '6ft': 55, '7ft': 65, '8ft': 75, '9ft+': 90 }
+      nordmann: { '2ft': 20, '3ft': 25, '4ft': 30, '5ft': 40, '6ft': 50, '7ft': 75, '8ft': 90, '9ft+': 100 },
+      fraser: { '2ft': 20, '3ft': 25, '4ft': 30, '5ft': 35, '6ft': 45, '7ft': 65, '8ft': 90, '9ft+': 100 },
+      spruce: { '2ft': 20, '3ft': 25, '4ft': 30, '5ft': 25, '6ft': 35, '7ft': 50, '8ft': 90, '9ft+': 100 },
+      pot: { '2ft': 20, '3ft': 25, '4ft': 30, '5ft': 40, '6ft': 40, '7ft': 40, '8ft': 40, '9ft+': 40 }
     },
     accessories: {
       metalStand: 15,
-      plasticStand: 8,
-      artificialWreath: 12,
-      handmadeWreath: 25,
-      hollyWreath: 18,
-      smallReindeer: 5,
-      mediumReindeer: 10,
-      largeReindeer: 15
+      plasticStand: 10,
+      artificialWreath: 5,
+      handmadeWreath: 15,
+      hollyWreath: 7.5,
+      smallReindeer: 30,
+      mediumReindeer: 40,
+      largeReindeer: 70
     }
   });
 
