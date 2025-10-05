@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model TreeStock {
+  id       Int     @id @default(autoincrement())
+  type     String  // nordmann, fraser, spruce, pot
+  size     String  // 2ft, 3ft, etc
+  quantity Int
+  price    Float
+  @@unique([type, size])
+}
+
+model AccessoryStock {
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  quantity Int
+  price    Float
+}
+
+model Sale {
+  id            Int        @id @default(autoincrement())
+  createdAt     DateTime   @default(now())
+  total         Float
+  discount      Int
+  paymentMethod String
+  email         String?
+  soldBy        String?
+  items         SaleItem[]
+}
+
+model SaleItem {
+  id       Int     @id @default(autoincrement())
+  saleId   Int
+  sale     Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  tree     String?
+  size     String?
+  metalStand        Int @default(0)
+  plasticStand      Int @default(0)
+  artificialWreath  Int @default(0)
+  handmadeWreath    Int @default(0)
+  hollyWreath       Int @default(0)
+  smallReindeer     Int @default(0)
+  mediumReindeer    Int @default(0)
+  largeReindeer     Int @default(0)
+  price    Float
+}
+
+model StockHistory {
+  id       Int      @id @default(autoincrement())
+  date     DateTime @default(now())
+  type     String   // delivery or sale
+  item     String
+  quantity Int
+  notes    String
+}
